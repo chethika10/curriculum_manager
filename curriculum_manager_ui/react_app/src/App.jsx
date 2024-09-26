@@ -4,7 +4,14 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  const [code, setCode] = useState("");
+  const [title, setTitle] = useState("");
+  const [isgpa, setGpa] = useState("");
+  const [lectureHours, setLectureHours] = useState(0);
+  const [labHours, setLabHours] = useState(0);
+  const [credits, srtCredits] = useState(0);
+  const [EvaluationCa, setEvaluationCa] = useState(0);
 
   return (
     <>
@@ -131,12 +138,17 @@ function App() {
             </td>
             <td class="c35" colspan="3" rowspan="1">
               <p class="c13">
-                <span class="c1">40</span>
+                <span class="c1">
+                  <input
+                    type="number"
+                    onChange={(e) => setEvaluationCa(e.target.value)}
+                  />
+                </span>
               </p>
             </td>
             <td class="c110" colspan="3" rowspan="1">
               <p class="c13">
-                <span class="c1">60</span>
+                <span class="c1">{100 - EvaluationCa}</span>
               </p>
             </td>
           </tr>
