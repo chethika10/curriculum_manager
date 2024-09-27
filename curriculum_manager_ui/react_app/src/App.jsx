@@ -48,7 +48,7 @@ function App() {
             <td class="c113" colspan="10" rowspan="1">
               <p class="c13">
                 <span class="c1">
-                  <input type="text" style={{width:"100%"}}/>
+                  <input type="text" style={{ width: "100%" }} />
                 </span>
               </p>
             </td>
@@ -163,7 +163,7 @@ function App() {
             <td class="c69" colspan="23" rowspan="1">
               <p class="c40">
                 <span class="c4">
-                  <textarea type="textArea" style={{width: "100%"}} />
+                  <textarea type="textArea" style={{ width: "100%" }} />
                 </span>
               </p>
             </td>
