@@ -13,5 +13,5 @@ public class ModuleController {
     public ModuleController(ModuleService moduleService) {
         this.moduleService = moduleService;
     }
-    
+
 }

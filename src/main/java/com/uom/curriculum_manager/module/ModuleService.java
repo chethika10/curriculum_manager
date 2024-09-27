@@ -13,4 +13,7 @@ public class ModuleService {
         this.moduleRepo = moduleRepo;
     }
 
+    public Module addModule(Module module){
+        return moduleRepo.save(module);
+    }
 }
