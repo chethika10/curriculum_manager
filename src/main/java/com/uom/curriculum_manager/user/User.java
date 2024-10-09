@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.user;
 
+import com.uom.curriculum_manager.security.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +31,9 @@ public class User implements UserDetails {
     private Role role;
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

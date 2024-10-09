@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.security;
 
+import com.uom.curriculum_manager.security.token.TokenRepo;
 import com.uom.curriculum_manager.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,6 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private final static String SECRET_KEY="8fcd11e416631faf6fe5f6158630adbc6ff6d733a8683a6ef95de7b631047476";
+    private final TokenRepo tokenRepo;
 
     public String generateToken(User user){
         String token= Jwts
@@ -36,9 +38,15 @@ public class JwtService {
     public String extractUserName(String token){
         return extractClaim(token,Claims::getSubject);
     }
+
     public boolean isValid(String token, UserDetails user){
         String userName=extractUserName(token);
-        return userName.equals(user.getUsername()) && !isTokenExpired(token);
+
+        boolean isValidToken = tokenRepo.findTokenByToken(token).map(
+                t->!t.isLoggedOut()
+        ).orElse(false);
+
+        return userName.equals(user.getUsername()) && !isTokenExpired(token) && isValidToken;
     }
 
     private boolean isTokenExpired(String token) {
