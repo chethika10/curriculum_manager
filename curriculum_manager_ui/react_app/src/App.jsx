@@ -19,8 +19,10 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="/" element={<StudentHome />} />
         {/* protected */}
-        <Route element={<RequireAuth />}>
+        <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
           <Route path="AdminHome" element={<AdminHome />} />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={["LECTURER"]} />}>
           <Route path="LecturerHome" element={<LecturerHome />} />
         </Route>
       </Route>

@@ -13,11 +13,11 @@ function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     userRef.current.focus();
@@ -43,6 +43,7 @@ function Login() {
       setAuth({ user, pwd, role, accessToken });
       setPwd("");
       setUser("");
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("no server respond");
