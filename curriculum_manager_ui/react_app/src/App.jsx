@@ -4,21 +4,27 @@ import viteLogo from "/vite.svg";
 // import "./App.css";
 import Module from "./Screens/module";
 import Login from "./Screens/Login";
+import AdminHome from "./Screens/AdminHome";
+import LecturerHome from "./Screens/LecturerHome";
+import StudentHome from "./Screens/StudentHome";
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  // const [count, setCount] = useState(0);
-  // const [code, setCode] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [isgpa, setGpa] = useState("");
-  // const [lectureHours, setLectureHours] = useState(0);
-  // const [labHours, setLabHours] = useState(0);
-  // const [credits, srtCredits] = useState(0);
-  // const [EvaluationCa, setEvaluationCa] = useState(0);
-
   return (
-    <main className="App">
-      <Login />
-    </main>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public */}
+        <Route path="login" element={<Login />} />
+        <Route path="/" element={<StudentHome />} />
+        {/* protected */}
+        <Route element={<RequireAuth />}>
+          <Route path="AdminHome" element={<AdminHome />} />
+          <Route path="LecturerHome" element={<LecturerHome />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

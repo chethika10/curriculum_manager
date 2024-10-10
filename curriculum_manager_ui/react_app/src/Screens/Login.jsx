@@ -1,14 +1,19 @@
 import React, { useRef } from "react";
-import { useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 const LOGIN_URL = "/auth/login";
 
 function Login() {
   const userRef = useRef();
   const errRef = useRef();
 
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -32,10 +37,22 @@ function Login() {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
+      //   console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.token;
+      const role = response?.data?.role;
+      setAuth({ user, pwd, role, accessToken });
       setPwd("");
       setUser("");
-    } catch (err) {}
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("no server respond");
+      } else if (err.response?.status === 403) {
+        setErrMsg("wrong username or password");
+      } else {
+        setErrMsg("login failed");
+      }
+      errRef.current.focus();
+    }
   };
 
   return (
