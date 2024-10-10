@@ -47,6 +47,6 @@ public class AuthenticationService {
         token1.setLoggedOut(false);
         token1.setUser(user);
         tokenRepo.save(token1);
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(token,user.getRole());
     }
 }
