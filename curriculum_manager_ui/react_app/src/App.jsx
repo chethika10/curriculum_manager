@@ -7,6 +7,7 @@ import Login from "./Screens/Login";
 import AdminHome from "./Screens/AdminHome";
 import LecturerHome from "./Screens/LecturerHome";
 import StudentHome from "./Screens/StudentHome";
+import Unauthorized from "./Screens/Unauthorized";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
@@ -18,6 +19,8 @@ function App() {
         {/* public */}
         <Route path="login" element={<Login />} />
         <Route path="/" element={<StudentHome />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
         {/* protected */}
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
           <Route path="AdminHome" element={<AdminHome />} />

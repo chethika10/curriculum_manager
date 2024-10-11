@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
 
