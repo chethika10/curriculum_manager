@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<User> getAllUsers();
+    public List<Object> getAllUsers();
     public User addOrUpdateUser(User user);
+
+    User changePassword(String password, String name);
 }

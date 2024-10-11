@@ -15,11 +15,19 @@ public class UserServiceImpl implements UserService{
         this.userRepo=userRepo;
     }
     @Override
-    public List<User> getAllUsers() {
-        return (List<User>) userRepo.getAllUsers();
+    public List<Object> getAllUsers() {
+        return  userRepo.getAllUsers();
     }
     @Override
     public User addOrUpdateUser(User user) {
         return userRepo.save(user);
+    }
+
+    @Override
+    public User changePassword(String password, String name) {
+        User user=userRepo.findUserByUserName(name);
+        user.setPassword(password);
+        userRepo.save(user);
+        return user;
     }
 }

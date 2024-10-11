@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uom.curriculum_manager.security.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,9 +31,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "password")
+//    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Token> tokens;
 
     @Override
