@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final CustomLogoutHandler logoutHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http.cors(AbstractHttpConfigurer::disable);
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         req->req.requestMatchers("/auth/login/**")
