@@ -20,6 +20,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="/" element={<StudentHome />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/module" element={<Module />} />
 
         {/* protected */}
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>

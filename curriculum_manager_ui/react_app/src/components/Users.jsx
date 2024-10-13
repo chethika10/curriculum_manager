@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-
+import axios from "../api/axios";
 const Users = () => {
   const [users, setUsers] = useState();
   const axiosPrivate = useAxiosPrivate();
@@ -13,7 +13,19 @@ const Users = () => {
         const response = await axiosPrivate.get("/user/getall", {
           signal: controller.signal,
         });
-        // console.log(response.data);
+        // const response = await axios.get(
+        //   "/user/getall",
+        //   // JSON.stringify({ userName: user, password: pwd }),
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       Authorization:
+        //         "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYWhhbiIsImlhdCI6MTcyODcxOTY0NCwiZXhwIjoxNzI4ODA2MDQ0fQ.f4lk40koy1hbSr0zRD-6mSuxy5UNw0hOl0Fv4QpqG0X0gCg3VeLCtSqI0tt7qmXj",
+        //     },
+        //     withCredentials: true,
+        //   }
+        // );
+        console.log(response.data);
         // console.log(response);
         isMounted && setUsers(response.data);
       } catch (err) {
@@ -34,7 +46,7 @@ const Users = () => {
       {users?.length ? (
         <ul>
           {users.map((user, i) => (
-            <li key={i}>{user?.userName}</li>
+            <li key={i}>{user[1]}</li>
           ))}
         </ul>
       ) : (

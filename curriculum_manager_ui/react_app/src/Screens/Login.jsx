@@ -10,7 +10,7 @@ function Login() {
   const errRef = useRef();
 
   const { setAuth } = useAuth();
-
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -41,6 +41,8 @@ function Login() {
       const accessToken = response?.data?.token;
       const role = response?.data?.role;
       setAuth({ user, pwd, role, accessToken });
+      console.log(auth);
+      localStorage.setItem("auth", JSON.stringify({ user, role, accessToken }));
       setPwd("");
       setUser("");
       navigate(from, { replace: true });
