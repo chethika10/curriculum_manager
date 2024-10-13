@@ -22,6 +22,12 @@ public class LearningOutcome {
     @Column(length = 65534)
     private String learningOutcome;
 
+    @Column
+    private int labAssessments;
+
+    @Column
+    private int otherAssessments;
+
     @ManyToOne
     @JoinColumn(name = "module_code")
     private Module module;
