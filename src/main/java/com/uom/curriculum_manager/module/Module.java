@@ -1,6 +1,7 @@
 package com.uom.curriculum_manager.module;
 
 import com.uom.curriculum_manager.module.learningOutcome.LearningOutcome;
+import com.uom.curriculum_manager.module.syllabusOutline.SyllabusOutline;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,5 +45,7 @@ public class Module {
     @OneToMany(mappedBy = "module")
     private List<LearningOutcome> learningOutcomes;
 
+    @OneToMany(mappedBy = "module")
+    private  List<SyllabusOutline> syllabusOutlines;
 
 }
