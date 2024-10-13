@@ -13,4 +13,7 @@ public interface UserRepo extends CrudRepository <User, Integer>{
     public List<Object> getAllUsers();
 
     public User findUserByUserName(String userName);
+
+    @Query(value = "SELECT * from User ",nativeQuery = true)
+    public List<User> getAll();
 }

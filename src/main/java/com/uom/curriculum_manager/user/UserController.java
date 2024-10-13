@@ -56,4 +56,16 @@ public class UserController {
         response.add("" + user.getId());
         return new ResponseEntity<List<String>>(response, HttpStatus.OK);
     }
+
+    // TODO: 2024-10-13 remove below method
+    @GetMapping("/getallusers")
+    public ResponseEntity<List<User>> getAll() {
+        List<User> users = null;
+        try {
+            users = userService.getAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

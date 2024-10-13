@@ -1,7 +1,10 @@
 package com.uom.curriculum_manager.module;
 
+import com.uom.curriculum_manager.module.learningOutcome.LearningOutcome;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table
@@ -38,7 +41,8 @@ public class Module {
     @Column(length = 65534)
     private String objectives;
 
-
+    @OneToMany(mappedBy = "module")
+    private List<LearningOutcome> learningOutcomes;
 
 
 }
