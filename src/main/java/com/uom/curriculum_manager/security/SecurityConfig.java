@@ -31,7 +31,7 @@ public class SecurityConfig {
         http.cors();
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req->req.requestMatchers("/auth/**")
+                        req->req.requestMatchers("/auth/login/**")
                                 .permitAll()
                                 .requestMatchers("/user/addorupdate/**").hasAuthority("ADMIN")
                                 .anyRequest()

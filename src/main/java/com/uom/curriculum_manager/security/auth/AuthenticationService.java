@@ -5,11 +5,7 @@ import com.uom.curriculum_manager.security.token.Token;
 import com.uom.curriculum_manager.security.token.TokenRepo;
 import com.uom.curriculum_manager.user.User;
 import com.uom.curriculum_manager.user.UserRepo;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,8 +31,7 @@ public class AuthenticationService {
                 )
         );
         User user=userRepo.findUserByUserName(request.getUsername());
-        String accessToken=jwtService.generateAccessToken(user);
-        String refreshToken=jwtService.generateRefreshToken(user);
+        String token=jwtService.generateToken(user);
 
         List<Token> validTokenListByUser=tokenRepo.findAllTokenByUser(user.getId());
         if(!validTokenListByUser.isEmpty()){
@@ -45,37 +40,13 @@ public class AuthenticationService {
                     }
             );
         }
-//        tokenRepo.saveAll(validTokenListByUser);
-        tokenRepo.deleteAll(validTokenListByUser);
-        Token token1=new Token();
+        tokenRepo.saveAll(validTokenListByUser);
 
-        token1.setToken(refreshToken);
+        Token token1=new Token();
+        token1.setToken(token);
         token1.setLoggedOut(false);
         token1.setUser(user);
-//        Token token1=new Token();
-//        token1.setToken(accessToken);
-//        token1.setLoggedOut(false);
-//        token1.setUser(user);
         tokenRepo.save(token1);
-        return new AuthenticationResponse(accessToken,refreshToken,user.getRole());
-    }
-
-    public ResponseEntity<AuthenticationResponse> refreshToken(HttpServletRequest request, HttpServletResponse response) {
-
-        String authHeader=request.getHeader("Authorization");
-        //System.out.println(authHeader);
-        if(authHeader==null ||!authHeader.startsWith("Bearer ")){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        String token=authHeader.substring(7);
-        String username=jwtService.extractUserName(token);
-        User user=userRepo.findUserByUserName(username);
-
-        if(jwtService.isValidRefreshToken(token,user)){
-            String accessToken=jwtService.generateAccessToken(user);
-            return new ResponseEntity<>(new AuthenticationResponse(accessToken,token,user.getRole()),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
+        return new AuthenticationResponse(token,user.getRole());
     }
 }
