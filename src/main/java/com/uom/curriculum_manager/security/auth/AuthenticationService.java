@@ -40,7 +40,8 @@ public class AuthenticationService {
                     }
             );
         }
-        tokenRepo.saveAll(validTokenListByUser);
+//        tokenRepo.saveAll(validTokenListByUser);
+        tokenRepo.deleteAll(validTokenListByUser);
 
         Token token1=new Token();
         token1.setToken(token);
