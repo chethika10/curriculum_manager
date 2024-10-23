@@ -48,7 +48,7 @@ const NavBar = () => {
                 </li>
                 <li>
                   <a className="dropdown-item">
-                    <button type="button" class="btn btn-outline-danger">
+                    <button type="button" className="btn btn-outline-danger">
                       logout
                     </button>
                   </a>

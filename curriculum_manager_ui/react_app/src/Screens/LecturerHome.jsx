@@ -6,9 +6,10 @@ function LecturerHome() {
     <div className="back">
       <NavBar />
       Lecturer Home
-      <br/>
+      <br/>  
+      <br />  
       <br />
-      <button type="button" class="btn btn-outline-dark">
+      <button type="button" className="btn btn-outline-dark">
         Modules
       </button>
       <br />

@@ -11,6 +11,7 @@ import Unauthorized from "./Screens/Unauthorized";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
+import AddModule from "./Screens/AddModule";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<StudentHome />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/module" element={<Module />} />
+        <Route path="/addmodule" element={<AddModule />} />
 
         {/* protected */}
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
