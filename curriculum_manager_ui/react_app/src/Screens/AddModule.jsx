@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import LearningOutcome from "../components/LearningOutcome";
 
 const AddModule = () => {
   const [code, setCode] = useState("");
@@ -11,6 +10,7 @@ const AddModule = () => {
   const [EvaluationCa, setEvaluationCa] = useState(0);
   const [objectives, setObjectives] = useState("");
   const [los, setLos] = useState([]);
+  const [SyllabusOutlines, setSyllabusOutlines] = useState([]);
 
   const AddLo = () => {
     const newLos = [...los, []];
@@ -26,7 +26,7 @@ const AddModule = () => {
     deleteLo.splice(i, 1);
     setLos(deleteLo);
   };
-  //   console.log(los);
+  console.log(los);
   // useEffect(() => {
   //   console.log (isgpa)
 
@@ -180,6 +180,41 @@ const AddModule = () => {
           type="button"
           className="btn btn-outline-dark"
           onClick={() => AddLo()}
+        >
+          + add
+        </button>
+      </div>
+      <br />
+      <div>
+        <label htmlFor="los" className="form-label">
+          Syllabus Outline
+        </label>
+        <br />
+        <div className="mb-3">
+          <label htmlFor="a" className="form-label">
+            Syllabus Outline 1
+          </label>
+          <textarea
+            // value={data}
+            // onChange={(e) => handleLochange(e, i)}
+            className="form-control bg-transparent"
+            id="a"
+            rows="3"
+          ></textarea>
+          <br />
+          <button
+            // onClick={() => removeLo(i)}
+            type="button"
+            className="btn btn-outline-danger"
+          >
+            remove
+          </button>
+        </div>
+        <br />
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          onClick={() => AddSo()}
         >
           + add
         </button>
