@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import LearningOutcome from "../components/LearningOutcome";
 
 const AddModule = () => {
   const [code, setCode] = useState("");
@@ -9,7 +10,23 @@ const AddModule = () => {
   const [credits, setCredits] = useState(0);
   const [EvaluationCa, setEvaluationCa] = useState(0);
   const [objectives, setObjectives] = useState("");
+  const [los, setLos] = useState([]);
 
+  const AddLo = () => {
+    const newLos = [...los, []];
+    setLos(newLos);
+  };
+  const handleLochange = (changedVAlue, i) => {
+    const inputData = [...los];
+    inputData[i] = changedVAlue.target.value;
+    setLos(inputData);
+  };
+  const removeLo = (i) => {
+    const deleteLo = [...los];
+    deleteLo.splice(i, 1);
+    setLos(deleteLo);
+  };
+  //   console.log(los);
   // useEffect(() => {
   //   console.log (isgpa)
 
@@ -128,6 +145,44 @@ const AddModule = () => {
           id="objectives"
           rows="3"
         ></textarea>
+      </div>
+      <div>
+        <label htmlFor="los" className="form-label">
+          Learning outcomes
+        </label>
+        <br />
+        {los.map((data, i) => {
+          return (
+            <div key={i} className="mb-3">
+              <label htmlFor={i} className="form-label">
+                LO{i + 1}
+              </label>
+              <textarea
+                value={data}
+                onChange={(e) => handleLochange(e, i)}
+                className="form-control bg-transparent"
+                id={i}
+                rows="3"
+              ></textarea>
+              <br />
+              <button
+                onClick={() => removeLo(i)}
+                type="button"
+                className="btn btn-outline-danger"
+              >
+                remove
+              </button>
+            </div>
+          );
+        })}
+        <br />
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          onClick={() => AddLo()}
+        >
+          + add
+        </button>
       </div>
     </div>
   );
