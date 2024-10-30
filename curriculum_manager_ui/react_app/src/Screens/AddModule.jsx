@@ -26,7 +26,31 @@ const AddModule = () => {
     deleteLo.splice(i, 1);
     setLos(deleteLo);
   };
-  console.log(los);
+  const AddSo = () => {
+    const newSyllabusOutlines = [...SyllabusOutlines, [[], [], []]];
+    setSyllabusOutlines(newSyllabusOutlines);
+  };
+  const removeSo= (i)=>{
+    const deleteSo = [...SyllabusOutlines];
+    deleteSo.splice(i, 1);
+    setSyllabusOutlines(deleteSo);
+  }
+  const handleSoValuechange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i][0] = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+  const handleSoDescriptionchange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i][1] = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+  const handleSoHourschange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i][2] = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+  // console.log(SyllabusOutlines);
   // useEffect(() => {
   //   console.log (isgpa)
 
@@ -187,29 +211,53 @@ const AddModule = () => {
       <br />
       <div>
         <label htmlFor="los" className="form-label">
-          Syllabus Outline
+          Syllabus Outlines
         </label>
         <br />
-        <div className="mb-3">
-          <label htmlFor="a" className="form-label">
-            Syllabus Outline 1
-          </label>
-          <textarea
-            // value={data}
-            // onChange={(e) => handleLochange(e, i)}
-            className="form-control bg-transparent"
-            id="a"
-            rows="3"
-          ></textarea>
-          <br />
-          <button
-            // onClick={() => removeLo(i)}
-            type="button"
-            className="btn btn-outline-danger"
-          >
-            remove
-          </button>
-        </div>
+        {SyllabusOutlines.map((data, i) => {
+          return (
+            <div key={i} className="mb-3">
+              <label htmlFor="a" className="form-label">
+                Syllabus Outline 1
+              </label>
+              <textarea
+                value={data[0]}
+                onChange={(e) => handleSoValuechange(e, i)}
+                className="form-control bg-transparent"
+                id="a"
+                rows="3"
+              ></textarea>
+              <label htmlFor="a" className="form-label">
+                description
+              </label>
+              <textarea
+                value={data[1]}
+                onChange={(e) => handleSoDescriptionchange(e, i)}
+                className="form-control bg-transparent"
+                id="a"
+                rows="3"
+              ></textarea>
+              <label htmlFor="hours" className="form-label">
+                Hours
+              </label>
+              <input
+              value={data[2]}
+                onChange={(e) => handleSoHourschange(e, i)}
+                type="number"
+                className="form-control bg-transparent"
+                id="hours"
+              />
+              <br />
+              <button
+                onClick={() => removeSo(i)}
+                type="button"
+                className="btn btn-outline-danger"
+              >
+                remove
+              </button>
+            </div>
+          );
+        })}
         <br />
         <button
           type="button"
