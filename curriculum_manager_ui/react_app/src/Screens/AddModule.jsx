@@ -13,12 +13,12 @@ const AddModule = () => {
   const [SyllabusOutlines, setSyllabusOutlines] = useState([]);
 
   const AddLo = () => {
-    const newLos = [...los, []];
+    const newLos = [...los, { learningOutcome: "" }];
     setLos(newLos);
   };
   const handleLochange = (changedVAlue, i) => {
     const inputData = [...los];
-    inputData[i] = changedVAlue.target.value;
+    inputData[i].learningOutcome = changedVAlue.target.value;
     setLos(inputData);
   };
   const removeLo = (i) => {
@@ -27,30 +27,33 @@ const AddModule = () => {
     setLos(deleteLo);
   };
   const AddSo = () => {
-    const newSyllabusOutlines = [...SyllabusOutlines, [[], [], []]];
+    const newSyllabusOutlines = [
+      ...SyllabusOutlines,
+      { syllabusOutline: "", description: "", hours: 0 },
+    ];
     setSyllabusOutlines(newSyllabusOutlines);
   };
-  const removeSo= (i)=>{
+  const removeSo = (i) => {
     const deleteSo = [...SyllabusOutlines];
     deleteSo.splice(i, 1);
     setSyllabusOutlines(deleteSo);
-  }
+  };
   const handleSoValuechange = (changedVAlue, i) => {
     const inputData = [...SyllabusOutlines];
-    inputData[i][0] = changedVAlue.target.value;
+    inputData[i].syllabusOutline = changedVAlue.target.value;
     setSyllabusOutlines(inputData);
   };
   const handleSoDescriptionchange = (changedVAlue, i) => {
     const inputData = [...SyllabusOutlines];
-    inputData[i][1] = changedVAlue.target.value;
+    inputData[i].description = changedVAlue.target.value;
     setSyllabusOutlines(inputData);
   };
   const handleSoHourschange = (changedVAlue, i) => {
     const inputData = [...SyllabusOutlines];
-    inputData[i][2] = changedVAlue.target.value;
+    inputData[i].hours = changedVAlue.target.value;
     setSyllabusOutlines(inputData);
   };
-  // console.log(SyllabusOutlines);
+  console.log(JSON.stringify(SyllabusOutlines));
   // useEffect(() => {
   //   console.log (isgpa)
 
@@ -182,7 +185,7 @@ const AddModule = () => {
                 LO{i + 1}
               </label>
               <textarea
-                value={data}
+                value={data.learningOutcome}
                 onChange={(e) => handleLochange(e, i)}
                 className="form-control bg-transparent"
                 id={i}
@@ -221,7 +224,7 @@ const AddModule = () => {
                 Syllabus Outline 1
               </label>
               <textarea
-                value={data[0]}
+                value={data.syllabusOutline}
                 onChange={(e) => handleSoValuechange(e, i)}
                 className="form-control bg-transparent"
                 id="a"
@@ -231,7 +234,7 @@ const AddModule = () => {
                 description
               </label>
               <textarea
-                value={data[1]}
+                value={data.description}
                 onChange={(e) => handleSoDescriptionchange(e, i)}
                 className="form-control bg-transparent"
                 id="a"
@@ -241,7 +244,7 @@ const AddModule = () => {
                 Hours
               </label>
               <input
-              value={data[2]}
+                value={data.hours}
                 onChange={(e) => handleSoHourschange(e, i)}
                 type="number"
                 className="form-control bg-transparent"
