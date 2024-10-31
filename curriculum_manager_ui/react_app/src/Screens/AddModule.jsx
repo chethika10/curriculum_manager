@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+// import { axiosPrivate } from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const AddModule = () => {
   const [code, setCode] = useState("");
@@ -11,6 +13,7 @@ const AddModule = () => {
   const [objectives, setObjectives] = useState("");
   const [los, setLos] = useState([]);
   const [SyllabusOutlines, setSyllabusOutlines] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
   const AddLo = () => {
     const newLos = [...los, { learningOutcome: "" }];
@@ -54,7 +57,7 @@ const AddModule = () => {
     setSyllabusOutlines(inputData);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     var gpa = isgpa === "0";
     var learningOutcomes = los;
@@ -71,7 +74,15 @@ const AddModule = () => {
       learningOutcomes,
       syllabusOutlines,
     };
+    const controller = new AbortController();
     console.log(JSON.stringify(module));
+    const response = await axiosPrivate.post(
+      "/module/addorupdate",
+      JSON.stringify(module), {
+        signal: controller.signal,
+      }
+    );
+    console.log(response);
   };
   // console.log(JSON.stringify(SyllabusOutlines));
   // useEffect(() => {
