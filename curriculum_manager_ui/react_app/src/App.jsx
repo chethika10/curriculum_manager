@@ -12,6 +12,7 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
 import AddModule from "./Screens/AddModule";
+import AllModules from "./Screens/AllModules";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/module" element={<Module />} />
         <Route path="/addmodule" element={<AddModule />} />
+        <Route path="/allmodules" element={<AllModules />} />
 
         {/* protected */}
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
