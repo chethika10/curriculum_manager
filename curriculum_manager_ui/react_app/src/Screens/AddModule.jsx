@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 const AddModule = () => {
   const [code, setCode] = useState("");
   const [title, setTitle] = useState("");
-  const [isgpa, setGpa] = useState(0);
+  const [isgpa, setGpa] = useState("0");
   const [lectureHours, setLectureHours] = useState(0);
   const [labHours, setLabHours] = useState(0);
   const [credits, setCredits] = useState(0);
-  const [EvaluationCa, setEvaluationCa] = useState(0);
+  const [evaluationCa, setEvaluationCa] = useState(0);
   const [objectives, setObjectives] = useState("");
   const [los, setLos] = useState([]);
   const [SyllabusOutlines, setSyllabusOutlines] = useState([]);
@@ -53,9 +53,29 @@ const AddModule = () => {
     inputData[i].hours = changedVAlue.target.value;
     setSyllabusOutlines(inputData);
   };
-  console.log(JSON.stringify(SyllabusOutlines));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var gpa = isgpa === "0";
+    var learningOutcomes = los;
+    var syllabusOutlines = SyllabusOutlines;
+    const module = {
+      code,
+      title,
+      gpa,
+      lectureHours,
+      labHours,
+      credits,
+      evaluationCa,
+      objectives,
+      learningOutcomes,
+      syllabusOutlines,
+    };
+    console.log(JSON.stringify(module));
+  };
+  // console.log(JSON.stringify(SyllabusOutlines));
   // useEffect(() => {
-  //   console.log (isgpa)
+  // console.log (isgpa==="0")
 
   // }, [isgpa])
 
@@ -159,7 +179,7 @@ const AddModule = () => {
           aria-label="WE"
           className="form-control bg-transparent"
           disabled
-          value={100 - EvaluationCa}
+          value={100 - evaluationCa}
         />
       </div>
       <div className="mb-3">
@@ -270,6 +290,16 @@ const AddModule = () => {
           + add
         </button>
       </div>
+      <br />
+      <br />
+      <br />
+      <button
+        type="button"
+        className="btn btn-outline-dark"
+        onClick={(e) => handleSubmit(e)}
+      >
+        Submit
+      </button>
     </div>
   );
 };
