@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.module.syllabusOutline;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.uom.curriculum_manager.module.Module;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +33,7 @@ public class SyllabusOutline {
 
     @ManyToOne
     @JoinColumn(name = "module_code")
+    @JsonBackReference
     private Module module;
 
 }

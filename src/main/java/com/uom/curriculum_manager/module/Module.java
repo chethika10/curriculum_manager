@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.module;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.uom.curriculum_manager.module.learningOutcome.LearningOutcome;
 import com.uom.curriculum_manager.module.syllabusOutline.SyllabusOutline;
 import jakarta.persistence.*;
@@ -42,10 +43,12 @@ public class Module {
     @Column(length = 65534)
     private String objectives;
 
-    @OneToMany(mappedBy = "module")
+    @OneToMany(mappedBy = "module",orphanRemoval = true)
+    @JsonManagedReference
     private List<LearningOutcome> learningOutcomes;
 
-    @OneToMany(mappedBy = "module")
+    @OneToMany(mappedBy = "module",orphanRemoval = true)
+    @JsonManagedReference
     private  List<SyllabusOutline> syllabusOutlines;
 
 }

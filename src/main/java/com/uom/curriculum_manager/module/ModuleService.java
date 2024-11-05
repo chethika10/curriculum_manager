@@ -36,4 +36,12 @@ public class ModuleService {
         }
         return moduleRepo.getModuleByCode(module.getCode());
     }
+
+    public List<Object> getAll() {
+        return moduleRepo.getAllModules();
+    }
+
+    public Module getModuleByCode(String code) {
+        return moduleRepo.getModuleByCode(code);
+    }
 }
