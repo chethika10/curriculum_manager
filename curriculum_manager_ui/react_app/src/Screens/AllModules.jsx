@@ -9,7 +9,7 @@ const AllModules = () => {
     const { data } = await axiosPrivate.get("/module/getall");
     const data2 = Array.from(data);
     setModules(data2);
-    console.log("asdf", data2);
+    // console.log("asdf", data2);
   };
   useEffect(() => {
     getdata();
