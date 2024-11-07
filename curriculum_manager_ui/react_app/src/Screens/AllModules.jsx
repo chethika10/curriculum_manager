@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
 const AllModules = () => {
   const [modules, setModules] = useState([]);
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+
 
   const getdata = async () => {
     const { data } = await axiosPrivate.get("/module/getall");
     const data2 = Array.from(data);
     setModules(data2);
     // console.log("asdf", data2);
+  };
+  const navigateUser = (index) => {
+    console.log(index);
+    navigate("/viewmodule", { state: { moduleCode: index } });
   };
   useEffect(() => {
     getdata();
@@ -39,7 +46,7 @@ const AllModules = () => {
                   <button
                     type="button"
                     className="btn btn-outline-dark"
-                    // onClick={() => AddLo()}
+                    onClick={() => navigateUser(data[0])}
                   >
                     View
                   </button>
