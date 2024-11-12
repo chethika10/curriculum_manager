@@ -1,53 +1,14 @@
-import React, { useEffect, useState } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { useLocation } from "react-router-dom";
 
-const ViewModule = () => {
-  const axiosPrivate = useAxiosPrivate();
-  const [module, setModule] = useState({
-    code: "",
-    title: "",
-    gpa: true,
-    lectureHours: 0,
-    labHours: 0,
-    credits: 0,
-    evaluationCa: 0,
-    objectives: "",
-    learningOutcomes: [],
-    syllabusOutlines: [],
-  });
+const EditModule = () => {
   const location = useLocation();
-  const index = location.state.moduleCode;
-  const navigate = useNavigate();
-
-  const getdata = async () => {
-    const { data } = await axiosPrivate.get(
-      "/module/getbycode/" + String(index)
-    );
-    // const data2 = Array.from(data);
-    setModule(data);
-    // console.log("/module/getbycode/" + String(index))
-    console.log("asdf", data);
-  };
-  const navigateUser = () => {
-    
-    navigate("/editmodule", { state: { module: module } });
-  };
-  useEffect(() => {
-    getdata();
-  }, []);
+  const module = location.state.module;
+  //   console.log(module);
   return (
     <div className="back">
-      View Module
+      Edit Module
       <br />
-      <br />
-      <button
-        type="button"
-        className="btn btn-outline-dark"
-        onClick={() => navigateUser()}
-      >
-        Edit
-      </button>
       <br />
       <div className="mb-3">
         <label htmlFor="code" className="form-label">
@@ -249,4 +210,4 @@ const ViewModule = () => {
   );
 };
 
-export default ViewModule;
+export default EditModule;
