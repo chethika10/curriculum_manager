@@ -60,10 +60,11 @@ const EditModule = () => {
           Module code
         </label>
         <input
-          onChange={(e) => {
-            setModule((module) => ({ ...module, code: e.target.value }));
-          }}
+          // onChange={(e) => {
+          //   setModule((module) => ({ ...module, code: e.target.value }));
+          // }}
           value={module.code}
+          disabled
           type="text"
           className="form-control bg-transparent"
           id="code"
