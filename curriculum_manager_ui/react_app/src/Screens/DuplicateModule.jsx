@@ -1,75 +1,72 @@
-import React, { useEffect, useState } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const ViewModule = () => {
-  const axiosPrivate = useAxiosPrivate();
-  const [module, setModule] = useState({
-    code: "",
-    title: "",
-    gpa: true,
-    lectureHours: 0,
-    labHours: 0,
-    credits: 0,
-    evaluationCa: 0,
-    objectives: "",
-    learningOutcomes: [],
-    syllabusOutlines: [],
-  });
+const DuplicateModule = () => {
   const location = useLocation();
-  const index = location.state.moduleCode;
-  const navigate = useNavigate();
+  const [module, setModule] = useState(location.state.module);
+  const [los, setLos] = useState(module.learningOutcomes);
+  const [SyllabusOutlines, setSyllabusOutlines] = useState(
+    module.syllabusOutlines
+  );
 
-  const getdata = async () => {
-    const { data } = await axiosPrivate.get(
-      "/module/getbycode/" + String(index)
-    );
-    // const data2 = Array.from(data);
-    setModule(data);
-    // console.log("/module/getbycode/" + String(index))
-    console.log("asdf", data);
+  const AddLo = () => {
+    const newLos = [...los, { learningOutcome: "" }];
+    setLos(newLos);
   };
-  const navigateUserEdit = () => {
-    navigate("/editmodule", { state: { module: module } });
+  const handleLochange = (changedVAlue, i) => {
+    const inputData = [...los];
+    inputData[i].learningOutcome = changedVAlue.target.value;
+    setLos(inputData);
   };
-  const navigateUserDuplicate = () => {
-    navigate("/duplicatemodule", { state: { module: module } });
+  const removeLo = (i) => {
+    const deleteLo = [...los];
+    deleteLo.splice(i, 1);
+    setLos(deleteLo);
   };
-  useEffect(() => {
-    getdata();
-  }, []);
+  const AddSo = () => {
+    const newSyllabusOutlines = [
+      ...SyllabusOutlines,
+      { syllabusOutline: "", description: "", hours: 0 },
+    ];
+    setSyllabusOutlines(newSyllabusOutlines);
+  };
+  const removeSo = (i) => {
+    const deleteSo = [...SyllabusOutlines];
+    deleteSo.splice(i, 1);
+    setSyllabusOutlines(deleteSo);
+  };
+  const handleSoValuechange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i].syllabusOutline = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+  const handleSoDescriptionchange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i].description = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+  const handleSoHourschange = (changedVAlue, i) => {
+    const inputData = [...SyllabusOutlines];
+    inputData[i].hours = changedVAlue.target.value;
+    setSyllabusOutlines(inputData);
+  };
+
+  //   console.log(module);
   return (
     <div className="back">
-      View Module
+      Edit Module
       <br />
-      <br />
-      <div>
-        <button
-          type="button"
-          className="btn btn-outline-dark"
-          onClick={() => navigateUserEdit()}
-        >
-          Edit
-        </button>
-        &nbsp;
-        &nbsp;
-        <button
-          type="button"
-          className="btn btn-outline-dark"
-          onClick={() => navigateUserDuplicate()}
-        >
-          Duplicate
-        </button>
-      </div>
       <br />
       <div className="mb-3">
         <label htmlFor="code" className="form-label">
           Module code
         </label>
         <input
-          //   onChange={(e) => setCode(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, code: e.target.value }));
+          }}
           value={module.code}
+          //   disabled
           type="text"
           className="form-control bg-transparent"
           id="code"
@@ -80,8 +77,9 @@ const ViewModule = () => {
           Module title
         </label>
         <input
-          //   onChange={(e) => setTitle(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, title: e.target.value }));
+          }}
           value={module.title}
           type="text"
           className="form-control bg-transparent"
@@ -94,8 +92,9 @@ const ViewModule = () => {
         </label>
         <br />
         <select
-          //   onChange={(e) => setGpa(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, gpa: e.target.value === "0" }));
+          }}
           value={module.gpa ? 0 : 1}
           name="isgpa"
           id="isgpa"
@@ -109,8 +108,12 @@ const ViewModule = () => {
           Lecture Hours per week
         </label>
         <input
-          //   onChange={(e) => setLectureHours(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({
+              ...module,
+              lectureHours: e.target.value,
+            }));
+          }}
           value={module.lectureHours}
           type="number"
           className="form-control bg-transparent"
@@ -122,8 +125,9 @@ const ViewModule = () => {
           Lab/Tutorial Hours per week
         </label>
         <input
-          //   onChange={(e) => setLabHours(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, labHours: e.target.value }));
+          }}
           value={module.labHours}
           type="number"
           className="form-control bg-transparent"
@@ -135,8 +139,9 @@ const ViewModule = () => {
           Credits
         </label>
         <input
-          // onChange={(e) => setCredits(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, credits: e.target.value }));
+          }}
           value={module.credits}
           type="number"
           className="form-control bg-transparent"
@@ -157,8 +162,12 @@ const ViewModule = () => {
       <div className="input-group ">
         <span className="input-group-text bg-transparent">CA</span>
         <input
-          // onChange={(e) => setEvaluationCa(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({
+              ...module,
+              evaluationCa: e.target.value,
+            }));
+          }}
           value={module.evaluationCa}
           type="number"
           aria-label="CA"
@@ -169,8 +178,8 @@ const ViewModule = () => {
           type="number"
           aria-label="WE"
           className="form-control bg-transparent"
-          disabled
           value={100 - module.evaluationCa}
+          disabled
         />
       </div>
       <div className="mb-3">
@@ -178,8 +187,9 @@ const ViewModule = () => {
           Module Objectives
         </label>
         <textarea
-          // onChange={(e) => setObjectives(e.target.value)}
-          disabled
+          onChange={(e) => {
+            setModule((module) => ({ ...module, objectives: e.target.value }));
+          }}
           value={module.objectives}
           className="form-control bg-transparent"
           id="objectives"
@@ -191,7 +201,7 @@ const ViewModule = () => {
           Learning outcomes
         </label>
         <br />
-        {module.learningOutcomes.map((data, i) => {
+        {los.map((data, i) => {
           return (
             <div key={i} className="mb-3">
               <label htmlFor={i} className="form-label">
@@ -199,24 +209,38 @@ const ViewModule = () => {
               </label>
               <textarea
                 value={data.learningOutcome}
-                // onChange={(e) => handleLochange(e, i)}
-                disabled
+                onChange={(e) => handleLochange(e, i)}
                 className="form-control bg-transparent"
                 id={i}
                 rows="3"
               ></textarea>
               <br />
+              <button
+                onClick={() => removeLo(i)}
+                type="button"
+                className="btn btn-outline-danger"
+              >
+                remove
+              </button>
             </div>
           );
         })}
         <br />
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          onClick={() => AddLo()}
+        >
+          + add
+        </button>
       </div>
+      <br />
       <div>
         <label htmlFor="los" className="form-label">
           Syllabus Outlines
         </label>
         <br />
-        {module.syllabusOutlines.map((data, i) => {
+        {SyllabusOutlines.map((data, i) => {
           return (
             <div key={i} className="mb-3">
               <label htmlFor="a" className="form-label">
@@ -224,8 +248,7 @@ const ViewModule = () => {
               </label>
               <textarea
                 value={data.syllabusOutline}
-                // onChange={(e) => handleSoValuechange(e, i)}
-                disabled
+                onChange={(e) => handleSoValuechange(e, i)}
                 className="form-control bg-transparent"
                 id="a"
                 rows="3"
@@ -235,8 +258,7 @@ const ViewModule = () => {
               </label>
               <textarea
                 value={data.description}
-                // onChange={(e) => handleSoDescriptionchange(e, i)}
-                disabled
+                onChange={(e) => handleSoDescriptionchange(e, i)}
                 className="form-control bg-transparent"
                 id="a"
                 rows="3"
@@ -246,20 +268,33 @@ const ViewModule = () => {
               </label>
               <input
                 value={data.hours}
-                // onChange={(e) => handleSoHourschange(e, i)}
-                disabled
+                onChange={(e) => handleSoHourschange(e, i)}
                 type="number"
                 className="form-control bg-transparent"
                 id="hours"
               />
               <br />
+              <button
+                onClick={() => removeSo(i)}
+                type="button"
+                className="btn btn-outline-danger"
+              >
+                remove
+              </button>
             </div>
           );
         })}
         <br />
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          onClick={() => AddSo()}
+        >
+          + add
+        </button>
       </div>
     </div>
   );
 };
 
-export default ViewModule;
+export default DuplicateModule;

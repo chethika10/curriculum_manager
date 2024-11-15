@@ -15,6 +15,7 @@ import AddModule from "./Screens/AddModule";
 import AllModules from "./Screens/AllModules";
 import ViewModule from "./Screens/ViewModule";
 import EditModule from "./Screens/EditModule";
+import DuplicateModule from "./Screens/DuplicateModule";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/allmodules" element={<AllModules />} />
         <Route path="/viewmodule" element={<ViewModule />} />
         <Route path="/editmodule" element={<EditModule />} />
+        <Route path="/duplicatemodule" element={<DuplicateModule />} />
 
         {/* protected */}
         <Route element={<RequireAuth allowedRoles={["ADMIN"]} />}>
