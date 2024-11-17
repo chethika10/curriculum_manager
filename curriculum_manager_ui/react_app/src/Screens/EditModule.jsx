@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const EditModule = () => {
   const location = useLocation();
   const [module, setModule] = useState(location.state.module);
   const [los, setLos] = useState(module.learningOutcomes);
-  const [SyllabusOutlines, setSyllabusOutlines] = useState(module.syllabusOutlines);
+  const [SyllabusOutlines, setSyllabusOutlines] = useState(
+    module.syllabusOutlines
+  );
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   const AddLo = () => {
     const newLos = [...los, { learningOutcome: "" }];
@@ -47,6 +52,34 @@ const EditModule = () => {
     const inputData = [...SyllabusOutlines];
     inputData[i].hours = changedVAlue.target.value;
     setSyllabusOutlines(inputData);
+  };
+  useEffect(() => {
+    setModule((prevModule) => ({
+        ...prevModule,
+        learningOutcomes: los,
+        syllabusOutlines: SyllabusOutlines,
+    }));
+}, [los, SyllabusOutlines]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // setModule((module) => ({
+    //   ...module,
+    //   learningOutcomes: los,
+    //   syllabusOutlines: SyllabusOutlines,
+    // }));
+    // setModule((module) => ({ ...module, syllabusOutlines: SyllabusOutlines }));
+    console.log(module.learningOutcomes);
+    const controller = new AbortController();
+    console.log(JSON.stringify(module));
+    const response = await axiosPrivate.post(
+      "/module/addorupdate",
+      JSON.stringify(module),
+      {
+        signal: controller.signal,
+      }
+    );
+    console.log(response);
+    navigate("/allmodules");
   };
 
   //   console.log(module);
@@ -242,7 +275,7 @@ const EditModule = () => {
           return (
             <div key={i} className="mb-3">
               <label htmlFor="a" className="form-label">
-                Syllabus Outline 1
+                Syllabus Outline {i + 1}
               </label>
               <textarea
                 value={data.syllabusOutline}
@@ -291,6 +324,23 @@ const EditModule = () => {
           + add
         </button>
       </div>
+      <br />
+      <br />
+      <br />
+      <button
+        type="button"
+        className="btn btn-outline-dark"
+        onClick={(e) => {
+          // setModule((module) => ({
+          //   ...module,
+          //   learningOutcomes: los,
+          //   syllabusOutlines: SyllabusOutlines,
+          // }));
+          handleSubmit(e);
+        }}
+      >
+        Submit
+      </button>
     </div>
   );
 };
