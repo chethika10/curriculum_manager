@@ -46,6 +46,7 @@ public class ModuleService {
     }
 
     public Module editModule(Module module) {
+        Module module1=moduleRepo.save(module);
         //delete existing los
         List<LearningOutcome> learningOutcomes=learningOutcomeRepo.findAllByModule_Code(module.getCode());
         learningOutcomeRepo.deleteAll(learningOutcomes);
@@ -56,16 +57,18 @@ public class ModuleService {
         syllabusOutlineRepo.deleteAll(syllabusOutlines);
         syllabusOutlines=module.getSyllabusOutlines();
 
-        //save module
-        module=moduleRepo.save(module);
+
         for (LearningOutcome l:learningOutcomes) {
-            l.setModule(module);
+            l.setModule(module1);
+//            l.setId(0);
             learningOutcomeRepo.save(l);
         }
         for (SyllabusOutline s:syllabusOutlines) {
-            s.setModule(module);
+            s.setModule(module1);
+//            s.setId(0);
             syllabusOutlineRepo.save(s);
         }
-        return moduleRepo.getModuleByCode(module.getCode());
+
+        return moduleRepo.getModuleByCode(module1.getCode());
     }
 }
