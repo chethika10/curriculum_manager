@@ -71,4 +71,21 @@ public class ModuleService {
 
         return moduleRepo.getModuleByCode(module1.getCode());
     }
+
+    public Module duplicateModule(Module module) {
+        List<LearningOutcome> learningOutcomes=module.getLearningOutcomes();
+        List<SyllabusOutline> syllabusOutlines=module.getSyllabusOutlines();
+        Module module1=moduleRepo.save(module);
+        for (LearningOutcome l:learningOutcomes) {
+            l.setModule(module1);
+            l.setId(0);
+            learningOutcomeRepo.save(l);
+        }
+        for (SyllabusOutline s:syllabusOutlines) {
+            s.setModule(module1);
+            s.setId(0);
+            syllabusOutlineRepo.save(s);
+        }
+        return moduleRepo.getModuleByCode(module1.getCode());
+    }
 }

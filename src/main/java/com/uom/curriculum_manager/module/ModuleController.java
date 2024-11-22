@@ -29,6 +29,11 @@ public class ModuleController {
         module= moduleService.editModule(module);
         return new ResponseEntity<>(module,HttpStatus.OK);
     }
+    @PostMapping("/duplicate")
+    public ResponseEntity<Module> duplicateModule(@RequestBody Module module){
+        module= moduleService.duplicateModule(module);
+        return new ResponseEntity<>(module,HttpStatus.OK);
+    }
     @GetMapping("/getall")
     public ResponseEntity<List<Object>> getAll(){
         List<Object> modules=moduleService.getAll();
