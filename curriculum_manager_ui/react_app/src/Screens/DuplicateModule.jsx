@@ -74,7 +74,7 @@ const DuplicateModule = () => {
     const controller = new AbortController();
     console.log(JSON.stringify(module));
     const response = await axiosPrivate.post(
-      "/module/addorupdate",
+      "/module/duplicate",
       JSON.stringify(module),
       {
         signal: controller.signal,
