@@ -72,7 +72,7 @@ const EditModule = () => {
     const controller = new AbortController();
     console.log(JSON.stringify(module));
     const response = await axiosPrivate.post(
-      "/module/addorupdate",
+      "/module/edit",
       JSON.stringify(module),
       {
         signal: controller.signal,
