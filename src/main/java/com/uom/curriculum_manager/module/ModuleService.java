@@ -44,4 +44,28 @@ public class ModuleService {
     public Module getModuleByCode(String code) {
         return moduleRepo.getModuleByCode(code);
     }
+
+    public Module editModule(Module module) {
+        //delete existing los
+        List<LearningOutcome> learningOutcomes=learningOutcomeRepo.findAllByModule_Code(module.getCode());
+        learningOutcomeRepo.deleteAll(learningOutcomes);
+        learningOutcomes=module.getLearningOutcomes();
+
+        //delete existing SOs
+        List<SyllabusOutline> syllabusOutlines=syllabusOutlineRepo.findAllByModule_Code(module.getCode());
+        syllabusOutlineRepo.deleteAll(syllabusOutlines);
+        syllabusOutlines=module.getSyllabusOutlines();
+
+        //save module
+        module=moduleRepo.save(module);
+        for (LearningOutcome l:learningOutcomes) {
+            l.setModule(module);
+            learningOutcomeRepo.save(l);
+        }
+        for (SyllabusOutline s:syllabusOutlines) {
+            s.setModule(module);
+            syllabusOutlineRepo.save(s);
+        }
+        return moduleRepo.getModuleByCode(module.getCode());
+    }
 }

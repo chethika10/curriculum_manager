@@ -24,6 +24,11 @@ public class ModuleController {
         return new ResponseEntity<>(module, HttpStatus.OK);
 
     }
+    @PostMapping("/edit")
+    public ResponseEntity<Module> editModule(@RequestBody Module module){
+        module= moduleService.editModule(module);
+        return new ResponseEntity<>(module,HttpStatus.OK);
+    }
     @GetMapping("/getall")
     public ResponseEntity<List<Object>> getAll(){
         List<Object> modules=moduleService.getAll();
