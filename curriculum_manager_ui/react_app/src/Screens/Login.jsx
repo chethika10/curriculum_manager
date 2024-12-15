@@ -59,7 +59,7 @@ function Login() {
   };
 
   return (
-    <section>
+    <section className="back">
       <p
         ref={errRef}
         className={errMsg ? "errmsg" : "offscreen"}
@@ -77,6 +77,7 @@ function Login() {
           onChange={(e) => setUser(e.target.value)}
           value={user}
           required
+          className="form-control bg-transparent"
         />
         <br />
         <label htmlFor="password">Password:</label>
@@ -86,9 +87,10 @@ function Login() {
           onChange={(e) => setPwd(e.target.value)}
           value={pwd}
           required
+          className="form-control bg-transparent"
         />
         <br />
-        <button>Sign in</button>
+        <button className="btn btn-outline-dark">Sign in</button>
       </form>
     </section>
   );
