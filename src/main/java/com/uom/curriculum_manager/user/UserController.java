@@ -56,16 +56,21 @@ public class UserController {
         response.add("" + user.getId());
         return new ResponseEntity<List<String>>(response, HttpStatus.OK);
     }
+    @GetMapping("/removeuser/{id}")
+    public ResponseEntity<User> removeUser(@PathVariable("id") int id){
+        User user=userService.removeUser(id);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
 
     // TODO: 2024-10-13 remove below method
-    @GetMapping("/getallusers")
-    public ResponseEntity<List<User>> getAll() {
-        List<User> users = null;
-        try {
-            users = userService.getAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
+//    @GetMapping("/getallusers")
+//    public ResponseEntity<List<User>> getAll() {
+//        List<User> users = null;
+//        try {
+//            users = userService.getAll();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new ResponseEntity<>(users, HttpStatus.OK);
+//    }
 }

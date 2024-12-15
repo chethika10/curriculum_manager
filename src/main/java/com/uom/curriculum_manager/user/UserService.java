@@ -9,4 +9,7 @@ public interface UserService {
 
     User changePassword(String password, String name);
     public List<User> getAll();
+
+    User removeUser(int id);
+
 }
