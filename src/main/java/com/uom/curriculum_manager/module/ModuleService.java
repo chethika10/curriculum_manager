@@ -2,6 +2,9 @@ package com.uom.curriculum_manager.module;
 
 import com.uom.curriculum_manager.module.learningOutcome.LearningOutcome;
 import com.uom.curriculum_manager.module.learningOutcome.LearningOutcomeRepo;
+import com.uom.curriculum_manager.module.learningOutcome.learningOutcomeAndPogramOutcomeMap.LearningOutcomeAndProgramOutcomeMap;
+import com.uom.curriculum_manager.module.learningOutcome.learningOutcomeAndPogramOutcomeMap.LearningOutcomeAndProgramOutcomeMapRepo;
+import com.uom.curriculum_manager.module.learningOutcome.learningOutcomeAndPogramOutcomeMap.MapDTO;
 import com.uom.curriculum_manager.module.syllabusOutline.SyllabusOutline;
 import com.uom.curriculum_manager.module.syllabusOutline.SyllabusOutlineRepo;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ public class ModuleService {
     private final ModuleRepo moduleRepo;
     private final LearningOutcomeRepo learningOutcomeRepo;
     private final SyllabusOutlineRepo syllabusOutlineRepo;
+    private final LearningOutcomeAndProgramOutcomeMapRepo mapRepo;
 
 //    @Autowired
 //    public ModuleService(ModuleRepo moduleRepo) {
@@ -87,5 +91,17 @@ public class ModuleService {
             syllabusOutlineRepo.save(s);
         }
         return moduleRepo.getModuleByCode(module1.getCode());
+    }
+
+    public Module mapPOAndLO(List<MapDTO> mapList) {
+        for (MapDTO m: mapList){
+            LearningOutcomeAndProgramOutcomeMap map=new LearningOutcomeAndProgramOutcomeMap();
+            map.setMapValue(m.getMapValue());
+            map.setProgramOutcomeId(m.getProgramOutcomeId());
+            map.setLearningOutcome(learningOutcomeRepo.findById(m.getLearningOutcomeId()).orElse(null));
+            mapRepo.save(map);
+        }
+        LearningOutcome learningOutcome=learningOutcomeRepo.findById(mapList.get(0).getLearningOutcomeId()).orElse(null);
+        return learningOutcome.getModule();
     }
 }

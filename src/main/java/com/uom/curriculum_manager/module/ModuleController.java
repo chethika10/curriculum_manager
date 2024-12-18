@@ -1,5 +1,6 @@
 package com.uom.curriculum_manager.module;
 
+import com.uom.curriculum_manager.module.learningOutcome.learningOutcomeAndPogramOutcomeMap.MapDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,12 @@ public class ModuleController {
     @GetMapping("/getbycode/{code}")
     public ResponseEntity<Module> getByCode(@PathVariable("code") String code){
         Module module=moduleService.getModuleByCode(code);
+        return new ResponseEntity<>(module,HttpStatus.OK);
+    }
+
+    @PostMapping("/poandlomapping")
+    public ResponseEntity<Module> pOAndLOMapping(List<MapDTO> mapList){
+        Module module=moduleService.mapPOAndLO(mapList);
         return new ResponseEntity<>(module,HttpStatus.OK);
     }
 
