@@ -99,6 +99,7 @@ public class ModuleService {
             map.setMapValue(m.getMapValue());
             map.setProgramOutcomeId(m.getProgramOutcomeId());
             map.setLearningOutcome(learningOutcomeRepo.findById(m.getLearningOutcomeId()).orElse(null));
+            mapRepo.deleteAll(mapRepo.findAllByProgramOutcomeIdAndLearningOutcome(map.getProgramOutcomeId(),map.getLearningOutcome()));
             mapRepo.save(map);
         }
         LearningOutcome learningOutcome=learningOutcomeRepo.findById(mapList.get(0).getLearningOutcomeId()).orElse(null);
