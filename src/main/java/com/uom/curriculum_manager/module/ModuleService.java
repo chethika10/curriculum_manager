@@ -102,7 +102,7 @@ public class ModuleService {
             mapRepo.deleteAll(mapRepo.findAllByProgramOutcomeIdAndLearningOutcome(map.getProgramOutcomeId(),map.getLearningOutcome()));
             mapRepo.save(map);
         }
-        LearningOutcome learningOutcome=learningOutcomeRepo.findById(mapList.get(0).getLearningOutcomeId()).orElse(null);
-        return learningOutcome.getModule();
+        String moduleCode= learningOutcomeRepo.findModuleCodeById(mapList.get(0).getLearningOutcomeId());
+        return moduleRepo.getModuleByCode(moduleCode);
     }
 }
