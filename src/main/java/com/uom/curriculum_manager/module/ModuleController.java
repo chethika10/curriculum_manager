@@ -47,7 +47,7 @@ public class ModuleController {
     }
 
     @PostMapping("/poandlomapping")
-    public ResponseEntity<Module> pOAndLOMapping(List<MapDTO> mapList){
+    public ResponseEntity<Module> pOAndLOMapping(@RequestBody List<MapDTO> mapList){
         Module module=moduleService.mapPOAndLO(mapList);
         return new ResponseEntity<>(module,HttpStatus.OK);
     }
