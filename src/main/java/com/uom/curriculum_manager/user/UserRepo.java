@@ -9,11 +9,11 @@ import java.util.List;
 @Repository
 public interface UserRepo extends CrudRepository <User, Integer>{
 
-    @Query(value = "SELECT u.id,u.username, u.role FROM user u",nativeQuery = true)
+    @Query(value = "SELECT u.id,u.userName, u.role FROM User u")
     public List<Object> getAllUsers();
 
     public User findUserByUserName(String userName);
 
-    @Query(value = "SELECT * from User ",nativeQuery = true)
+    @Query(value = "SELECT u from User u")
     public List<User> getAll();
 }
