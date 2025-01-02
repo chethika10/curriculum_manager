@@ -1,5 +1,7 @@
 package com.uom.curriculum_manager.user;
 
+import com.uom.curriculum_manager.security.token.Token;
+import com.uom.curriculum_manager.security.token.TokenRepo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,12 +10,17 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
     private UserRepo userRepo;
+    @Mock
+    private TokenRepo tokenRepo;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -31,5 +38,21 @@ public class UserServiceTest {
 
         Assertions.assertThat(user1).isNotNull();
         Assertions.assertThat(user1.getPassword()).isEqualTo("2345");
+    }
+    @Test
+    public void userService_removeUser_returnUser(){
+        User user= User.builder().userName("sahan2").password("1234").role(Role.ADMIN).build();
+
+        Token token=new Token();
+        token.setUser(user);
+        token.setToken("abc");
+        token.setLoggedOut(false);
+        List<Token> tokens=List.of(token);
+
+        when(tokenRepo.findAllTokenByUser(Mockito.any(Integer.class))).thenReturn(tokens);
+
+        when(userRepo.findById(Mockito.any(Integer.class))).thenReturn(java.util.Optional.ofNullable(user));
+
+        assertAll(()->userService.removeUser(1));
     }
 }
